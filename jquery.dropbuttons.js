@@ -1,5 +1,5 @@
 /*
- * Dropbuttons v.1.0 Jquery Plugin
+ * Dropbuttons v.1.0.0 Jquery Plugin
  * Tested with JQuery 1.12.4 and Bootstrap 3.3.7
  * Copyright (c) 2016 Luis Ig. Bacas Riveiro
  * Licensed under MIT (https://github.com/lbacas/dropbuttons/blob/master/LICENSE)

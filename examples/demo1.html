@@ -1,0 +1,57 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dropbuttons demo 1</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <script src="../jquery.dropbuttons.css"></script>
+
+    <!-- jQuery and Bootstrap Javascript -->
+    <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <script src="../jquery.dropbuttons.js"></script>
+</head>
+
+<body>
+	<div class="container-fluid">
+        <div class="btn-toolbar dropbuttons">
+            <button type="button" class="btn btn-default">Default</button>
+            <button type="button" class="btn btn-primary">Primary</button>
+            <button type="button" class="btn btn-success">Success</button>
+            <button type="button" class="btn btn-info">Info</button>
+            <button type="button" class="btn btn-warning">Warning</button>
+            <button type="button" class="btn btn-danger">Danger</button>
+            <button type="button" class="btn btn-link">Link</button>
+            <button type="button" class="btn btn-default">Default 2</button>
+            <button type="button" class="btn btn-primary">Primary 2</button>
+            <button type="button" class="btn btn-success">Success 2</button>
+            <button type="button" class="btn btn-info">Info 2</button>
+            <button type="button" class="btn btn-warning">Warning 2</button>
+            <button type="button" class="btn btn-danger">Danger 2</button>
+            <button type="button" class="btn btn-link">Link 2</button>
+            <button type="button" class="btn btn-default">Default 3</button>
+            <button type="button" class="btn btn-primary" data-dropbuttons-class="bg-primary">Primary 3</button>
+            <button type="button" class="btn btn-success" data-dropbuttons-class="bg-success">Success 3</button>
+            <button type="button" class="btn btn-info" data-dropbuttons-class="bg-info">Info 3</button>
+            <button type="button" class="btn btn-warning" data-dropbuttons-class="bg-warning">Warning 3</button>
+            <button type="button" class="btn btn-danger" data-dropbuttons-class="bg-danger">Danger 3</button>
+            <button type="button" class="btn btn-link">Link 3</button>
+            <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    Dropdown
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                </ul>
+            </div>
+        </div>
+    </div>
+	<script type="text/javascript">
+	$(".dropbuttons").dropbuttons();
+	</script>
+</body>
+</html>

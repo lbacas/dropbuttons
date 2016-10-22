@@ -1,0 +1,8 @@
+/*!
+ * Dropbuttons v.1.0 Jquery Plugin
+ * Copyright (c) 2016 Luis Ig. Bacas Riveiro
+ * Licensed under MIT (https://github.com/lbacas/dropbuttons/blob/master/LICENSE)
+ */
+.dropbuttons .dropdown {
+    display: inline-block;
+}

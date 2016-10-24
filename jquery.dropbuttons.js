@@ -96,10 +96,12 @@
 				}
 
                 x = availableSpace();
-				if (x > getFirstHiddenElementWidth()) { //and here we bring the buttons out
+				if (x >= getFirstHiddenElementWidth()) { //and here we bring the buttons out
+                    var hiddenElementWidth = 100000;
 					$($dropdownButtons()).each(function( index ) {
-						if (getHiddenElementWidth(this) < x && !($(this).hasClass('always-dropdown'))) {
-							x = x - $(this).outerWidth(true);
+                        hiddenElementWidth = getHiddenElementWidth(this);
+						if ( hiddenElementWidth < x && !($(this).hasClass('always-dropdown'))) {
+                            x = x - hiddenElementWidth;
                             s.removeFromDropdown( $(this) ).appendTo($container);
 						} else {return false;}
 					 });

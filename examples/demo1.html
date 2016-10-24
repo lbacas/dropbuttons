@@ -51,7 +51,12 @@
         </div>
     </div>
 	<script type="text/javascript">
-	$(".dropbuttons").dropbuttons();
+    $("button:not('.dropdown-toggle')").on('click', function() {
+        alert( 'Button pressed \'' + $(this).text() + '\'');
+    });
+	$(".dropbuttons").dropbuttons({
+        development: true
+    });
 	</script>
 </body>
 </html>

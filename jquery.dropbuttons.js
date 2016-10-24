@@ -17,6 +17,8 @@
 			dropdownButtonsSelector : "li",
 			visibleButtonsSelector  : ">button:not(.dropdown)",
 			autoArrangeButtons      : true,
+            developmentId           : "dt-devInfo",
+            development             : false,
             addToDropdown  : function( elem ) {
                 if ( elem.length === 1 ) {
                     var dropdownElem = $('<li></li>');
@@ -82,14 +84,32 @@
 				return $container.outerWidth(true) - visibleButtonsWidth();
 			};
 
+            // Start Development info
+			if ( s.development ) {
+				$('body').append('<div class="alert alert-success" id="'+ s.developmentId +'"></div>');
+				var $developmentDiv = $('#' + s.developmentId);
+				$($developmentDiv).css('position','fixed').css('right','20px').css('bottom','20px');
+
+				var devPrint = function (label, elem) {
+                    var labelId = label.replace(/\s+/g, '-').toLowerCase();
+					if ($('#'+labelId).length > 0) {
+						$('#'+labelId).text(label + ': ' + elem);
+					} else {
+						$('#dt-devInfo').append('<div id="' + labelId + '">' + label + ': ' + elem + '</div>');
+					}
+					return true;
+				};
+			}
+			// End Development info
+
 			var arrangeButtons = function () {
                 var x = availableSpace();
 
-				if (x < 0) {//we will hide buttons here
-					$( $visibleButtons().get().reverse() ).each(function( index ){
-						if (!($(this).hasClass('always-visible'))){
-                                x = x + $(this).outerWidth(true);
-								s.addToDropdown( $(this) ).prependTo(dropdownMenu);
+				if (x < 0) { //we will hide buttons here
+					$( $visibleButtons().get().reverse() ).each(function( index ) {
+						if (!($(this).hasClass('always-visible'))) {
+                            x = x + $(this).outerWidth(true);
+							s.addToDropdown( $(this) ).prependTo(dropdownMenu);
 						}
 						if (x >= 0) {return false;}
 					});
@@ -113,6 +133,15 @@
 					dropdown.show();
 					$container.append( dropdown );
 				}
+
+                // Start Development info
+				if ( s.development && typeof devPrint === 'function' ) {
+					devPrint("Container width", $container.outerWidth());
+					devPrint("Visible tabs width", visibleButtonsWidth());
+					devPrint("Available space", availableSpace());
+					devPrint("First hidden", getFirstHiddenElementWidth());
+				}
+				// End Development info
 			};
 
 			//init

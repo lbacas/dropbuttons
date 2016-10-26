@@ -9,6 +9,12 @@
 
     <link rel="stylesheet" type="text/css" href="https://rawgit.com/lbacas/dropbuttons/master/jquery.dropbuttons.css">
 
+    <style>
+        .btn-toolbar > .dropdown > .btn {
+            margin-left: 5px;
+        }
+    </style>
+
     <!-- jQuery and Bootstrap Javascript -->
     <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
@@ -20,25 +26,25 @@
 	<div class="container-fluid">
         <div class="btn-toolbar dropbuttons">
             <button type="button" class="btn btn-default">Default</button>
-            <button type="button" class="btn btn-primary">Primary</button>
+            <button type="button" class="btn btn-primary always-visible">Primary</button>
             <button type="button" class="btn btn-success">Success</button>
             <button type="button" class="btn btn-info">Info</button>
             <button type="button" class="btn btn-warning">Warning</button>
-            <button type="button" class="btn btn-danger">Danger</button>
+            <button type="button" class="btn btn-danger always-dropdown">Danger</button>
             <button type="button" class="btn btn-link">Link</button>
             <button type="button" class="btn btn-default">Default 2</button>
-            <button type="button" class="btn btn-primary">Primary 2</button>
+            <button type="button" class="btn btn-primary always-visible">Primary 2</button>
             <button type="button" class="btn btn-success">Success 2</button>
             <button type="button" class="btn btn-info">Info 2</button>
             <button type="button" class="btn btn-warning">Warning 2</button>
-            <button type="button" class="btn btn-danger">Danger 2</button>
+            <button type="button" class="btn btn-danger always-dropdown">Danger 2</button>
             <button type="button" class="btn btn-link">Link 2</button>
             <button type="button" class="btn btn-default">Default 3</button>
-            <button type="button" class="btn btn-primary" data-dropbuttons-class="bg-primary">Primary 3</button>
+            <button type="button" class="btn btn-primary always-visible" data-dropbuttons-class="bg-primary">Primary 3</button>
             <button type="button" class="btn btn-success" data-dropbuttons-class="bg-success">Success 3</button>
             <button type="button" class="btn btn-info" data-dropbuttons-class="bg-info">Info 3</button>
             <button type="button" class="btn btn-warning" data-dropbuttons-class="bg-warning">Warning 3</button>
-            <button type="button" class="btn btn-danger" data-dropbuttons-class="bg-danger">Danger 3</button>
+            <button type="button" class="btn btn-danger always-dropdown" data-dropbuttons-class="bg-danger">Danger 3</button>
             <button type="button" class="btn btn-link">Link 3</button>
             <div class="dropdown">
                 <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">

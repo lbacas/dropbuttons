@@ -118,12 +118,14 @@
                 x = availableSpace();
 				if (x >= getFirstHiddenElementWidth()) { //and here we bring the buttons out
                     var hiddenElementWidth = 100000;
+                    var elemAlwaysInDropdown = false;
 					$($dropdownButtons()).each(function( index ) {
                         hiddenElementWidth = getHiddenElementWidth(this);
-						if ( hiddenElementWidth < x && !($(this).hasClass('always-dropdown'))) {
+                        elemAlwaysInDropdown = ( $(this).hasClass('always-dropdown') || $(this).find('.always-dropdown').length > 0 );
+						if ( hiddenElementWidth < x && !elemAlwaysInDropdown ) {
                             x = x - hiddenElementWidth;
                             s.removeFromDropdown( $(this) ).appendTo($container);
-						} else {return false;}
+						}
 					 });
 				}
 
@@ -146,15 +148,23 @@
 
 			//init
 			if (s.autoArrangeButtons) {
-				var tempTabs = [];
+				var tempVisible = [],
+                    tempDropdown = [],
+                    i;
 				$($visibleButtons().get().reverse()).each(function( index ){
 					if ($(this).hasClass('always-visible')) {
-						tempTabs.push($(this));
+						tempVisible.push($(this));
+						$(this).remove();
+					} else if ($(this).hasClass('always-dropdown')) {
+						tempDropdown.push($(this));
 						$(this).remove();
 					}
 				});
-				for (var i = 0; i < tempTabs.length; i++ ) {
-					$container.prepend(tempTabs[i]);
+				for (i = 0; i < tempVisible.length; i++ ) {
+					$container.prepend(tempVisible[i]);
+				}
+                for (i = tempDropdown.length - 1 ; i >= 0 ; i-- ) {
+					$container.append(tempDropdown[i]);
 				}
 			}
 

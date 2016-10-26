@@ -1,5 +1,5 @@
 /*
- * Dropbuttons v.1.0.1 Jquery Plugin
+ * Dropbuttons v.1.0.2 Jquery Plugin
  * Tested with JQuery 1.12.4 and Bootstrap 3.3.7
  * Copyright (c) 2016 Luis Ig. Bacas Riveiro
  * Licensed under MIT (https://github.com/lbacas/dropbuttons/blob/master/LICENSE)
@@ -19,10 +19,32 @@
 			autoArrangeButtons      : true,
             developmentId           : "dt-devInfo",
             development             : false,
+            getHiddenElementWidth : function(elem, container) {
+                var tempElem;
+                if ( $(elem).attr('data-dropbuttons') === true ) {
+                    tempElem = $(elem).clone();
+                } else {
+                    tempElem = $(elem).find('[data-dropbuttons]').first().clone();
+                }
+
+				var hiddenElementWidth = $(tempElem).appendTo(container).removeClass('hidden').css("position","fixed").outerWidth(true);
+				$(tempElem).remove();
+				return hiddenElementWidth;
+			},
             addToDropdown  : function( elem ) {
                 if ( elem.length === 1 ) {
                     var dropdownElem = $('<li></li>');
-                    var dropdownLinkElem = $('<a href="#"></a>').html( elem.html() ).appendTo(dropdownElem);
+                    var dropdownLinkElem = $('<a href="#"></a>').appendTo(dropdownElem);
+                    var content = '';
+                    if ( elem.is('button') || elem.is('a') ) {
+                        content = elem.html();
+                    } else if ( elem.find('button, a').length > 0 ) {
+                        content = elem.find('button, a').first().html();
+                    } else {
+                        content = elem.text();
+                    }
+                    dropdownLinkElem.html( content );
+
                     dropdownElem.append( elem.addClass('hidden').attr('data-dropbuttons', true) );
                     dropdownElem.addClass( elem.attr('data-dropbuttons-class') );
                     dropdownLinkElem.on('click', function() {
@@ -57,19 +79,10 @@
 				return $(s.visibleButtonsSelector, $container);
 			};
 
-			function getFirstHiddenElementWidth() {
-				var tempElem = $dropdownButtons().first().clone().appendTo($container).css("position","fixed");
-				var hiddenElementWidth = $(tempElem).outerWidth(true);
-				$(tempElem).remove();
-				return hiddenElementWidth;
-			}
+            function getFirstHiddenElementWidth() {
+                return s.getHiddenElementWidth( $dropdownButtons().first(), $container );
+            }
 
-			function getHiddenElementWidth(elem) {
-				var tempElem = $(elem).clone().appendTo($container).css("position","fixed");
-				var hiddenElementWidth = $(tempElem).outerWidth(true);
-				$(tempElem).remove();
-				return hiddenElementWidth;
-			}
 
 			var visibleButtonsWidth = function () {
 				var visibleButtonsWidth = 0;
@@ -106,8 +119,10 @@
                 var x = availableSpace();
 
 				if (x < 0) { //we will hide buttons here
+                    var elemAlwaysVisible = false;
 					$( $visibleButtons().get().reverse() ).each(function( index ) {
-						if (!($(this).hasClass('always-visible'))) {
+                        elemAlwaysVisible = ( $(this).hasClass('always-visible') || $(this).find('.always-visible').length > 0 );
+						if ( !elemAlwaysVisible ) {
                             x = x + $(this).outerWidth(true);
 							s.addToDropdown( $(this) ).prependTo(dropdownMenu);
 						}
@@ -120,7 +135,7 @@
                     var hiddenElementWidth = 100000;
                     var elemAlwaysInDropdown = false;
 					$($dropdownButtons()).each(function( index ) {
-                        hiddenElementWidth = getHiddenElementWidth(this);
+                        hiddenElementWidth = s.getHiddenElementWidth(this, $container);
                         elemAlwaysInDropdown = ( $(this).hasClass('always-dropdown') || $(this).find('.always-dropdown').length > 0 );
 						if ( hiddenElementWidth < x && !elemAlwaysInDropdown ) {
                             x = x - hiddenElementWidth;
@@ -139,34 +154,38 @@
                 // Start Development info
 				if ( s.development && typeof devPrint === 'function' ) {
 					devPrint("Container width", $container.outerWidth());
-					devPrint("Visible tabs width", visibleButtonsWidth());
+                    devPrint("Dropdown width", $(dropdown).outerWidth(true));
+					devPrint("Visible buttons width", visibleButtonsWidth());
 					devPrint("Available space", availableSpace());
 					devPrint("First hidden", getFirstHiddenElementWidth());
 				}
 				// End Development info
 			};
 
-			//init
+			/*
+             * init
+             */
+            // Auto arrange buttons
 			if (s.autoArrangeButtons) {
-				var tempVisible = [],
-                    tempDropdown = [],
-                    i;
+				var tempVisible = [];
 				$($visibleButtons().get().reverse()).each(function( index ){
 					if ($(this).hasClass('always-visible')) {
 						tempVisible.push($(this));
 						$(this).remove();
-					} else if ($(this).hasClass('always-dropdown')) {
-						tempDropdown.push($(this));
-						$(this).remove();
 					}
 				});
-				for (i = 0; i < tempVisible.length; i++ ) {
+				for (var i = 0; i < tempVisible.length; i++ ) {
 					$container.prepend(tempVisible[i]);
 				}
-                for (i = tempDropdown.length - 1 ; i >= 0 ; i-- ) {
-					$container.append(tempDropdown[i]);
-				}
 			}
+            // Hide buttons marked as 'always-dropdown'.
+            var elemAlwaysInDropdown;
+            $( $visibleButtons().get().reverse() ).each(function( index ) {
+                elemAlwaysInDropdown = ( $(this).hasClass('always-dropdown') || $(this).find('.always-dropdown').length > 0 );
+                if ( elemAlwaysInDropdown ) {
+                    s.addToDropdown( $(this) ).prependTo(dropdownMenu);
+                }
+            });
 
 			$(document).ready(function(){
 				arrangeButtons();
